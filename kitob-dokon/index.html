@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ziyo Kitoblar | Zamonaviy Online Kitob Do'koni</title>
+  <meta name="description" content="O'zbekistondagi eng zamonaviy online kitob do'koni. Badiiy adabiyot, psixologiya, IT va biznes kitoblarini eng hamyonbop narxlarda xarid qiling.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📚</text></svg>">
+</head>
+<body>
+
+  <!-- Confetti Canvas -->
+  <canvas id="confettiCanvas"></canvas>
+
+  <!-- Sayt Yuqori Qismi (Header) -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav-inner">
+        <!-- Logo -->
+        <a href="#katalog" class="logo-area" id="logoLink">
+          <div class="logo-icon-wrap">
+            <span class="logo-icon">📖</span>
+          </div>
+          <div class="logo-text-group">
+            <span class="logo-title">ZIYO <span class="logo-badge">BOOKS</span></span>
+            <span class="logo-subtitle">Online Kitob Do'koni</span>
+          </div>
+        </a>
+
+        <!-- Qidiruv Qatori -->
+        <div class="search-container">
+          <div class="search-input-wrapper">
+            <span class="search-icon">🔍</span>
+            <input 
+              type="text" 
+              id="searchInput" 
+              class="search-input" 
+              placeholder="Kitob nomi, muallif yoki janr bo'yicha qidiring..."
+              autocomplete="off"
+            >
+            <button class="search-clear-btn" id="searchClearBtn" title="Tozalash">✕</button>
+          </div>
+        </div>
+
+        <!-- Tugmalar: Yangi kitob, Sevimlilar, Savat, Tema -->
+        <div class="nav-actions">
+          <button class="nav-btn icon-btn" id="themeToggleBtn" title="Tungi / Kunduzgi rejim">
+            <span id="themeIcon">🌙</span>
+          </button>
+
+          <button class="nav-btn" id="favsToggleBtn" title="Sevimlilar ro'yxati">
+            <span>❤️</span>
+            <span class="nav-btn-text">Sevimlilar</span>
+            <span class="badge-count" id="favCountBadge" style="display: none;">0</span>
+          </button>
+
+          <button class="nav-btn primary-btn" id="cartOpenBtn" title="Savatni ko'rish">
+            <span>🛒</span>
+            <span class="nav-btn-text">Savat</span>
+            <span class="badge-count" id="cartCountBadge" style="display: none;">0</span>
+          </button>
+
+          <button class="nav-btn" id="addBookOpenBtn" title="Yangi kitob qo'shish">
+            <span>➕</span>
+            <span class="nav-btn-text">Kitob qo'shish</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Asosiy Qism -->
+  <main>
+    <!-- Hero Banner -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-banner">
+          <div class="hero-content">
+            <div class="hero-tag">
+              <span>✨ Haftaning eng yaxshi taklifi</span>
+            </div>
+            <h1 class="hero-title">
+              Har Bir Sahifada <span>Yangi Dunyo</span> Kashf Qiling
+            </h1>
+            <p class="hero-desc">
+              O'zbek va jahon adabiyoti durdonalari, IT, biznes hamda shaxsiy rivojlanishga oid eng sara kitoblar jamlanmasi. Butun O'zbekiston bo'ylab tezkor yetkazib beramiz.
+            </p>
+            <div class="hero-actions">
+              <a href="#katalog" class="hero-btn-primary">
+                <span>📚 Kitoblarni ko'rish</span>
+              </a>
+              <button class="hero-btn-secondary" id="heroQuickReadBtn">
+                <span>⚡ Atom Odatlari parchasini o'qish</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Hero Kitob Ko'rgazmasi -->
+          <div class="hero-featured-card">
+            <div class="hero-book-3d" id="heroFeaturedBook">
+              <div class="hero-book-badge">Bestseller #1</div>
+              <div class="hero-book-content">
+                <div class="hero-book-icon">⚡</div>
+                <div class="hero-book-title">ATOM ODATLARI</div>
+                <div class="hero-book-author">Jeyms Klir</div>
+              </div>
+              <div class="hero-book-footer">
+                <span>59 000 so'm</span>
+                <span>⭐ 4.9 (342 ta sharh)</span>
+              </div>
+            </div>
+
+            <div class="hero-floating-badge">
+              <div class="floating-icon">🚚</div>
+              <div>
+                <div style="font-size: 13px; font-weight: 800;">Tezkor Yetkazish</div>
+                <div style="font-size: 11px; color: var(--text-muted);">24 soat ichida manzilingizda</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ishonchli xizmat qatori -->
+        <div class="features-strip">
+          <div class="feature-box">
+            <div class="feature-icon-circle">🚚</div>
+            <div class="feature-info">
+              <h4>Tezkor yetkazib berish</h4>
+              <p>O'zbekiston bo'ylab 24-48 soatda</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon-circle">⭐</div>
+            <div class="feature-info">
+              <h4>100% Asl nusxalar</h4>
+              <p>Rasmiy va sifatli nashriyotlar</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon-circle">💳</div>
+            <div class="feature-info">
+              <h4>Qulay to'lov usullari</h4>
+              <p>Payme, Click, Uzum yoki Naqd</p>
+            </div>
+          </div>
+          <div class="feature-box">
+            <div class="feature-icon-circle">🎧</div>
+            <div class="feature-info">
+              <h4>24/7 Qo'llab-quvvatlash</h4>
+              <p>Har qanday savolga tez javob</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Katalog va Filterlar bo'limi -->
+    <section class="catalog-section" id="katalog">
+      <div class="container">
+        <!-- Katalog Sarlavhasi va Tartiblash -->
+        <div class="catalog-header">
+          <div class="catalog-heading-wrap">
+            <h2>Sara Kitoblar To'plami</h2>
+            <p>O'zingizga ma'qul kitobni tanlang va qulay narxda xarid qiling</p>
+          </div>
+
+          <div class="catalog-controls">
+            <div class="sort-select-wrapper">
+              <select id="sortSelect" class="sort-select">
+                <option value="popular">Eng ommabop</option>
+                <option value="price-asc">Narxi: Arzondan qimmatga</option>
+                <option value="price-desc">Narxi: Qimmatdan arzonga</option>
+                <option value="rating-desc">Eng yuqori reyting</option>
+                <option value="year-desc">Eng yangi nashrlar</option>
+              </select>
+              <span class="select-arrow">▼</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Janrlar (Kategoriyalar) tugmalari -->
+        <div class="category-pills" id="categoryPills">
+          <button class="cat-pill active" data-category="all">✨ Barchasi</button>
+          <button class="cat-pill" data-category="badiiy">📖 Badiiy adabiyot</button>
+          <button class="cat-pill" data-category="psixologiya">🧠 Psixologiya & Rivojlanish</button>
+          <button class="cat-pill" data-category="it">💻 Dasturlash & IT</button>
+          <button class="cat-pill" data-category="biznes">💰 Biznes & Moliya</button>
+          <button class="cat-pill" data-category="tarix">👑 Tarix & Falsafa</button>
+          <button class="cat-pill" data-category="bolalar">⭐ Bolalar uchun</button>
+        </div>
+
+        <!-- Qo'shimcha filter: Narx slayderi va natijalar hisobi -->
+        <div class="filter-sub-bar">
+          <div class="price-range-group">
+            <label for="priceRange">Maksimal narx:</label>
+            <input type="range" id="priceRange" class="price-slider" min="30000" max="150000" step="5000" value="150000">
+            <span class="price-display-val" id="priceVal">150 000 so'm</span>
+          </div>
+
+          <div class="results-count-text">
+            Topildi: <strong id="booksFoundCount">12 ta kitob</strong>
+          </div>
+        </div>
+
+        <!-- Kitoblar Setkasi (Grid) -->
+        <div class="books-grid" id="booksGrid">
+          <!-- Dinamik ravishda JS orqali to'ldiriladi -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Savat Qutisi (Drawer) -->
+  <div class="cart-drawer-backdrop" id="cartBackdrop">
+    <aside class="cart-drawer" id="cartDrawer">
+      <div class="cart-header">
+        <h3>🛒 Savatchangiz (<span id="cartTotalItemsCount">0</span>)</h3>
+        <button class="modal-close-btn" id="cartCloseBtn">✕</button>
+      </div>
+
+      <div class="cart-items-list" id="cartItemsList">
+        <!-- Savatdagi kitoblar ro'yxati -->
+      </div>
+
+      <div class="cart-footer">
+        <!-- Promokod kiritish -->
+        <div class="promo-row">
+          <input type="text" id="promoInput" class="promo-input" placeholder="Promokod (masalan: KITOBXON)">
+          <button class="promo-apply-btn" id="promoApplyBtn">Qo'llash</button>
+        </div>
+        <div class="promo-tag-badge" id="promoBadge">
+          🎉 10% chegirma muvaffaqiyatli qo'llandi!
+        </div>
+
+        <!-- Narx hisob-kitoblari -->
+        <div class="cart-calc-row">
+          <span>Kitoblar narxi:</span>
+          <span id="cartSubtotal">0 so'm</span>
+        </div>
+        <div class="cart-calc-row" id="cartDiscountRow" style="display: none; color: var(--success);">
+          <span>Chegirma:</span>
+          <span id="cartDiscount">-0 so'm</span>
+        </div>
+        <div class="cart-calc-row">
+          <span>Yetkazib berish:</span>
+          <span id="cartDelivery">15 000 so'm</span>
+        </div>
+        <div class="cart-total-row">
+          <span>Yakuniy summa:</span>
+          <span id="cartTotal">0 so'm</span>
+        </div>
+
+        <button class="checkout-btn" id="openCheckoutModalBtn">
+          <span>Buyurtmani rasmiylashtirish →</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Kitob Tafsilotlari Modali (Quick View) -->
+  <div class="modal-backdrop" id="bookModalBackdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Kitob Tafsilotlari</h3>
+        <button class="modal-close-btn" id="bookModalCloseBtn">✕</button>
+      </div>
+      <div class="modal-body" id="bookModalBody">
+        <!-- Dinamik kontent -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Mini Mutolaa / Kitob O'qish Modali (Reader) -->
+  <div class="modal-backdrop reader-modal" id="readerModalBackdrop">
+    <div class="modal-container" id="readerModalContainer">
+      <div class="modal-header">
+        <h3 class="modal-title" id="readerBookTitle">Namuna Mutolaasi</h3>
+        <button class="modal-close-btn" id="readerCloseBtn">✕</button>
+      </div>
+
+      <div class="reader-toolbar">
+        <div class="reader-tools-group">
+          <span>Shrift:</span>
+          <button class="reader-tool-btn" id="fontDecBtn">A-</button>
+          <button class="reader-tool-btn" id="fontIncBtn">A+</button>
+        </div>
+        <div class="reader-tools-group">
+          <span>Mavzu:</span>
+          <button class="reader-tool-btn" id="themeWhiteBtn">Oq</button>
+          <button class="reader-tool-btn" id="themeSepiaBtn">Sepia (Qulay)</button>
+          <button class="reader-tool-btn" id="themeDarkBtn">Tungi</button>
+        </div>
+      </div>
+
+      <div class="reader-content-body" id="readerContentBody">
+        <h4 class="reader-chapter-title" id="readerChapterTitle">1-Bob</h4>
+        <div class="reader-paragraphs" id="readerParagraphs">
+          <!-- Paragraf matnlari -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buyurtmani Rasmiylashtirish Modali (Checkout Modal) -->
+  <div class="modal-backdrop" id="checkoutModalBackdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Buyurtmani Rasmiylashtirish</h3>
+        <button class="modal-close-btn" id="checkoutCloseBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="checkoutForm">
+          <div class="form-group">
+            <label for="orderName">Ism va Familiyangiz *</label>
+            <input type="text" id="orderName" class="form-control" placeholder="Masalan: Sardor Aliyev" required>
+          </div>
+
+          <div class="form-group">
+            <label for="orderPhone">Telefon raqamingiz *</label>
+            <input type="tel" id="orderPhone" class="form-control" placeholder="+998 90 123 45 67" required>
+          </div>
+
+          <div class="form-group">
+            <label for="orderRegion">Hudud / Viloyat *</label>
+            <select id="orderRegion" class="form-control" required>
+              <option value="Toshkent shahri">Toshkent shahri</option>
+              <option value="Toshkent viloyati">Toshkent viloyati</option>
+              <option value="Samarqand">Samarqand viloyati</option>
+              <option value="Buxoro">Buxoro viloyati</option>
+              <option value="Andijon">Andijon viloyati</option>
+              <option value="Farg'ona">Farg'ona viloyati</option>
+              <option value="Namangan">Namangan viloyati</option>
+              <option value="Xorazm">Xorazm viloyati</option>
+              <option value="Qashqadaryo">Qashqadaryo viloyati</option>
+              <option value="Surxondaryo">Surxondaryo viloyati</option>
+              <option value="Jizzax">Jizzax viloyati</option>
+              <option value="Sirdaryo">Sirdaryo viloyati</option>
+              <option value="Navoiy">Navoiy viloyati</option>
+              <option value="Qoraqalpog'iston">Qoraqalpog'iston Respublikasi</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="orderAddress">Aniq manzil (ko'cha, uy, xonadon) *</label>
+            <input type="text" id="orderAddress" class="form-control" placeholder="Masalan: Amir Temur ko'chasi 45-uy" required>
+          </div>
+
+          <div class="form-group">
+            <label>To'lov usulini tanlang *</label>
+            <div class="payment-options-grid">
+              <label class="payment-option-card selected">
+                <input type="radio" name="paymentMethod" value="Payme" checked>
+                <span class="payment-title">💳 Payme</span>
+              </label>
+              <label class="payment-option-card">
+                <input type="radio" name="paymentMethod" value="Click">
+                <span class="payment-title">🔵 Click Up</span>
+              </label>
+              <label class="payment-option-card">
+                <input type="radio" name="paymentMethod" value="Uzum Pay">
+                <span class="payment-title">🟣 Uzum Pay</span>
+              </label>
+              <label class="payment-option-card">
+                <input type="radio" name="paymentMethod" value="Naqd">
+                <span class="payment-title">💵 Yetkazilganda naqd</span>
+              </label>
+            </div>
+          </div>
+
+          <div style="margin-top: 24px;">
+            <button type="submit" class="checkout-btn">
+              <span>Buyurtmani tasdiqlash (<span id="checkoutTotalBtnSpan">0 so'm</span>)</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Buyurtma Qabul Qilindi Modali (Receipt) -->
+  <div class="modal-backdrop" id="receiptModalBackdrop">
+    <div class="modal-container" style="text-align: center;">
+      <div class="modal-header">
+        <h3 class="modal-title">Buyurtmangiz Qabul Qilindi!</h3>
+        <button class="modal-close-btn" id="receiptCloseBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="receipt-success-badge">✓</div>
+        <div class="receipt-header-center">
+          <h2 style="font-size: 22px; margin-bottom: 4px;">Rahmat, xaridingiz uchun!</h2>
+          <p style="font-size: 13.5px; color: var(--text-muted);">Tez orada operatorimiz siz bilan bog'lanadi</p>
+        </div>
+
+        <div class="receipt-box" id="receiptDetailsBox">
+          <!-- Buyurtma cheki tafsilotlari -->
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: center;">
+          <button class="hero-btn-primary" id="receiptDoneBtn">
+            <span>Yana xarid qilish 📚</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Yangi Kitob Qo'shish Modali -->
+  <div class="modal-backdrop" id="addBookModalBackdrop">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3 class="modal-title">Yangi Kitob Qo'shish</h3>
+        <button class="modal-close-btn" id="addBookCloseBtn">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="addBookForm">
+          <div class="form-group">
+            <label for="newBookTitle">Kitob nomi *</label>
+            <input type="text" id="newBookTitle" class="form-control" placeholder="Masalan: Yulduzli Tunlar" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newBookAuthor">Muallif *</label>
+            <input type="text" id="newBookAuthor" class="form-control" placeholder="Pirimqul Qodirov" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newBookCategory">Janr / Kategoriya *</label>
+            <select id="newBookCategory" class="form-control" required>
+              <option value="badiiy">Badiiy adabiyot</option>
+              <option value="psixologiya">Psixologiya & Rivojlanish</option>
+              <option value="it">Dasturlash & IT</option>
+              <option value="biznes">Biznes & Moliya</option>
+              <option value="tarix">Tarix & Falsafa</option>
+              <option value="bolalar">Bolalar uchun</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="newBookPrice">Narxi (so'mda) *</label>
+            <input type="number" id="newBookPrice" class="form-control" placeholder="Masalan: 55000" min="5000" required>
+          </div>
+
+          <div class="form-group">
+            <label for="newBookDesc">Qisqacha tavsifi *</label>
+            <textarea id="newBookDesc" class="form-control" rows="3" style="height: auto; padding: 10px 14px;" placeholder="Kitob nima haqida..." required></textarea>
+          </div>
+
+          <div style="margin-top: 20px;">
+            <button type="submit" class="checkout-btn">
+              <span>Do'konga qo'shish ✨</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Xabarnomalar Idishi -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Sayt Pastki Qismi (Footer) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-area">
+            <div class="logo-icon-wrap">
+              <span class="logo-icon">📖</span>
+            </div>
+            <div class="logo-text-group">
+              <span class="logo-title">ZIYO <span class="logo-badge">BOOKS</span></span>
+              <span class="logo-subtitle">Online Kitob Do'koni</span>
+            </div>
+          </div>
+          <p>
+            Ziyo Books — bu qalb va aql ozuqasi bo'lgan sara kitoblarni bir joyga jamlagan eng ishonchli online maskandir. Maqsadimiz — har bir insonni mutolaaga chorlash va ilm ulashish.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Kategoriyalar</h4>
+          <ul class="footer-links">
+            <li><a href="#katalog" data-cat-link="badiiy">Badiiy adabiyot</a></li>
+            <li><a href="#katalog" data-cat-link="psixologiya">Psixologiya va rivojlanish</a></li>
+            <li><a href="#katalog" data-cat-link="it">Dasturlash va axborot texnologiyalari</a></li>
+            <li><a href="#katalog" data-cat-link="biznes">Biznes va moliya</a></li>
+            <li><a href="#katalog" data-cat-link="tarix">Tarix va falsafa</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Xaridorlar uchun</h4>
+          <ul class="footer-links">
+            <li><a href="javascript:void(0)" onclick="showToast('Yetkazib berish butun O\'zbekiston bo\'ylab amalga oshiriladi!')">Yetkazib berish shartlari</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('To\'lov: Click, Payme, Uzum va Naqd')">To'lov turlari</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Kitob shikastlangan bo\'lsa 24 soat ichida almashtirib beriladi')">Qaytarish va almashtirish</a></li>
+            <li><a href="javascript:void(0)" onclick="showToast('Promokod: KITOBXON (10% chegirma)')">Aksiyalar va promokodlar</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Bog'lanish</h4>
+          <ul class="footer-links">
+            <li><a href="tel:+998712000000">📞 +998 (71) 200-00-00</a></li>
+            <li><a href="mailto:info@ziyobooks.uz">✉️ info@ziyobooks.uz</a></li>
+            <li><a href="#">📍 Toshkent shahri, Chilonzor tumani</a></li>
+            <li><a href="#">💬 Telegram: @ziyobooks_bot</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Ziyo Books. Barcha huquqlar himoyalangan.
+        </div>
+        <div>
+          O'zbekiston bo'ylab eng tezkor va ishonchli kitob yetkazish xizmati.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Dastur Ssenariylari -->
+  <script src="books-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
